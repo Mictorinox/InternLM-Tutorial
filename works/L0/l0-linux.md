@@ -128,6 +128,7 @@ test.sh 用于快速导出和还原虚拟环境。在此我们首先使用 conda
 
 可以看到，testenv.yml 文件中什么也没有，因为我们没有安装任何包。
 ![alt text](image-15.png)
+
 使用指令 conda env create -n testenv-2 -f testenv.yml 还原一个虚拟环境。
 ![alt text](image-16.png)
 可以看到还原的虚拟环境 testenv-2。
