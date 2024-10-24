@@ -136,8 +136,8 @@ test.sh 用于快速导出和还原虚拟环境。在此我们首先使用 conda
 
 #### 3.2 使用 test.sh 导出和还原虚拟环境
 
-test.sh 被用来自动化上述过程，首先创建 test.sh 文件
-![alt text](image-11.png)。
+test.sh 被用来自动化上述过程，首先创建 test.sh 文件。
+![alt text](image-11.png)
 
 使用指令 chmod +x test.sh 赋权，然后./test.sh export testenv 即可导出环境 testenv。
 ![alt text](image-18.png)
