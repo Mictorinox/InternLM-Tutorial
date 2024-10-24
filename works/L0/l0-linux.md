@@ -22,14 +22,14 @@
 首先在云平台创建开发机实例
 平台提供了登录命令和密码，使用 powershell 输入登陆命令和密码即可。
 
-![alt text](image.png)
+![alt text](images/image.png)
 
 #### 1.2 配置 ssh
 
 配置 ssh 是为了不用每次链接都输入密码。
 
 首先在本地生成密钥
-![alt text](image-1.png)
+![alt text](images/image-1.png)
 之后使用 Get-Content 指令读出公钥
 此处有个小坑：默认的公钥保存路径是"C:/Users/{用户名}/.ssh/id_rsa.pub" 如果用户名有空格，需要给路径加上引号，即'Get-Content "C:/Users/{用户名}/.ssh/id_rsa.pub"', 否则会报错‘找不到参数“{用户名后半段}/.ssh/id_rsa.pub”的形式参数’。
 
@@ -40,21 +40,21 @@
 配置 ssh 用 vscode 方便地浏览和编辑远程开发机文件。
 
 在 vscode 中打开 Remote-ssh 插件，新建远程连接，输入登录指令即可。
-![alt text](image-2.png)
+![alt text](images/image-2.png)
 
 #### 1.4 端口映射
 
 端口映射之后，可以用本地浏览器打开运行在远程开发机的 web app 页面。
 
 vscode 点击端口(Port)-添加端口(Add Port)，指定端口映射 xxxx(本文使用了 6789 端口)
-![alt text](image-3.png)
+![alt text](images/image-3.png)
 
 #### 1.5 运行文件
 
 首先编辑 HelloWorld.py, 在代码 demo.launch 中添加“server_port=xxxx”参数。
 
 运行文件，即可用本地浏览器打开界面。
-![alt text](image-4.png)
+![alt text](images/image-4.png)
 
 ### 2. 将 Linux 基础命令在开发机上完成一遍
 
@@ -88,29 +88,29 @@ b. 软连接 `ln -s {目录1} {目录2}`：
 实践中软链接可以用于配置环境，我们可以举个例子：
 
 我们首先新建两个文件夹testdir1和testdir2，
-![alt text](image-26.png)
+![alt text](images/image-26.png)
 
 然后在testdir1中创建一个文件hw.sh:
-![alt text](image-21.png)
+![alt text](images/image-21.png)
 此时在testdir1目录下可以执行hw.sh文件：
-![alt text](image-30.png)
+![alt text](images/image-30.png)
 
 我们在testdir2中创建一个指向testdir1的软连接
-![alt text](image-27.png)
+![alt text](images/image-27.png)
 此时在testdir2目录下，也可以执行hw.sh文件，这种软连接操作可以代替配置环境变量。
-![alt text](image-28.png)
+![alt text](images/image-28.png)
 
 
 #### 2.2 pstree 指令用于查看进程树
 
 首次在开发机上运行`pstree`指令时，可能会报错`bash: command pstree not found`
-![alt text](image-8.png)
+![alt text](images/image-8.png)
 
 这是因为部分 linux 发行版默认没有安装`pstree`指令，可以使用`apt-get install psmisc`指令安装。
-![alt text](image-9.png)
+![alt text](images/image-9.png)
 
 安装后即可正常运行，运行结果如下：
-![alt text](image-10.png)
+![alt text](images/image-10.png)
 
 考虑到潜在读者的阅读体验，ls pwd cd mkdir 等基础指令执行在此不加赘述。
 
@@ -121,29 +121,30 @@ test.sh 用于快速导出和还原虚拟环境。在此我们首先使用 conda
 #### 3.1 conda 导出和还原虚拟环境
 
 首先创建虚拟环境 testenv，
-![alt text](image-12.png)
+![alt text](images/image-12.png)
 
 然后激活虚拟环境，并导出到 testenv.yml
-![alt text](image-14.png)
+![alt text](images/image-14.png)
 
 可以看到，testenv.yml 文件中什么也没有，因为我们没有安装任何包。
-![alt text](image-15.png)
+![alt text](images/image-15.png)
 
 使用指令 conda env create -n testenv-2 -f testenv.yml 还原一个虚拟环境。
-![alt text](image-16.png)
+![alt text](images/image-16.png)
 可以看到还原的虚拟环境 testenv-2。
-![alt text](image-17.png)
+![alt text](images/image-17.png)
 
 #### 3.2 使用 test.sh 导出和还原虚拟环境
 
 test.sh 被用来自动化上述过程，首先创建 test.sh 文件。
-![alt text](image-11.png)
+![alt text](images/image-11.png)
 
 使用指令 chmod +x test.sh 赋权，然后./test.sh export testenv 即可导出环境 testenv。
-![alt text](image-18.png)
+![alt text](images/image-18.png)
 
 为了展示还原效果，我们先在 conda 中删除 testenv。
-![alt text](image-19.png)
+![alt text](images/image-19.png)
 
 使用./test.sh restore testenv 即可还原。
-![alt text](image-20.png)
+![alt text](images/image-20.png)
+
