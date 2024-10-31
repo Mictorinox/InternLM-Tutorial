@@ -51,7 +51,7 @@ maas 课程任务如下：
 ![alt text](images/image-22.png)
 
 
-# 2.2 模型上传
+## 2.2 模型上传
 通过git push实现模型上传
 
 首先在github codespace登录hugging face-cli 
