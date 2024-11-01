@@ -29,7 +29,7 @@ maas 课程任务如下：
 ![alt text](images/image-7.png)
 看起来是报文结构问题，我们查看返回的报文变量 res，变量值如下：
 ![alt text](images/image-8.png)
-可以看到，返回报文加上了 markdown 代码块前后缀，我们需要删除。另外"parameter_version"行的数组内三个值是字符串，应该加上引号，因此我们添加如下代码并运行
+llm返回的报文不稳定，笔者在尝试是出现的情况有：1.前后加上了 markdown 代码块前后缀，需要删除；2."parameter_version"数组内字符串没有加引号；3.有多余的换行符。因此我们添加如下代码并运行
 ![alt text](images/image-9.png)
 解析正常，控制台返回结果如下：
 ![alt text](images/image-6.png)
