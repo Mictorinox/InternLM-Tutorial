@@ -2,7 +2,7 @@
 
 # 课程任务
 
-maas 课程任务如下：
+python 课程任务如下：
 
 1. Leetcode 383(笔记中提交代码与 leetcode 提交通过截图)
 2. Vscode 连接 InternStudio debug 笔记
