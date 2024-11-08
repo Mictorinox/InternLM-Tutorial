@@ -48,8 +48,7 @@ git clone https://gitee.com/yzy0612/nltk_data.git  --branch gh-pages
 ```
 pip install llama-index-embeddings-huggingface==0.2.0 llama-index-embeddings-instructor==0.1.3
 ```
-这步会卸载 torch=2.0.1 并重新安装 torch=2.5.1，导致 bug
-解决方法：重新安装 torch
+这步会卸载 torch=2.0.1 并重新安装 torch=2.5.1，导致 bug。一个解决办法是重新安装 torch：
 ```
 conda install --force-reinstall pytorch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 pytorch-cuda=11.7 -c pytorch -c nvidia
 ```
@@ -79,6 +78,7 @@ print(rsp)
 ```
 
 此时尝试问 baseline 模型谁在 2024 年美国大选中获胜，模型是无法回答的：
+
 ![alt text](images/image.png)
 
 # 3. RAG调试
