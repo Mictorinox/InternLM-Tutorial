@@ -14,7 +14,7 @@ Agent是**一种能够自主感知环境并根据感知结果采取行动的实�
 - **目的性**：所有行为都以实现特定目标为导向。
 
 <div align="center">
-  <img src="https://s1.imagehub.cc/images/2024/11/04/eac389cdf83fd305c7131d7f208ad578.png" width="400" />
+  <img src="https://s1.imagehub.cc/images/2024/11/23/9ed4032e26d9ef7ec5e4c456a76278d5.png" width="400" />
 </div>
 
 
@@ -457,11 +457,17 @@ Lagent 框架的工具部分文档可以在此处查看：[Lagent 工具文档](
 
 （3）在控制台中，点击左侧的“项目管理”，然后点击右上角“创建项目”。
 
-（4）输入项目名称（可以使用“Lagent”），选择免费订阅，并在“订阅方案”中选择“Web API”。
+（4）输入项目名称（可以使用“Lagent”），选择免费订阅，并在凭据设置中创建新的凭据。
 
 （5）创建后，回到“项目管理”页面，找到你的 API Key 并复制保存。
 
-<img src="https://s1.imagehub.cc/images/2024/11/07/61e7a96c04e232652984a6abec9ff2da.png" alt="image" border="0" style="zoom: 50%;" >
+<div align="center">
+  <img src="https://s1.imagehub.cc/images/2024/11/07/61e7a96c04e232652984a6abec9ff2da.png" width="800" />
+</div>
+
+<div align="center">
+  <img src="https://s1.imagehub.cc/images/2024/11/25/998334e8caaa210a50db975af88d52cf.png" width="800" />
+</div>
 
 接着，我们需要在`laegnt/actions`文件夹下面创建一个天气查询的工具程序。
 
@@ -874,4 +880,4 @@ if __name__ == '__main__':
   <img src="https://s1.imagehub.cc/images/2024/11/20/16faa0c4718c372d1088293f814a1d33.png" width="700" />
 </div>
 
-**至此，我们完成了本节课所有内容。** 希望大家通过今天的学习，能够更加系统地掌握Agent和Multi-Agents的核心思想和实现方法，并在实际开发中灵活运用。🌟🌟🌟
+**至此，我们完成了本节课所有内容。** 希望大家通过今天的学习，能够更加系统地掌握Agent和Multi-Agents的核心思想和实现方法，并在实际开发中灵活运用。🎉🎉🎉
