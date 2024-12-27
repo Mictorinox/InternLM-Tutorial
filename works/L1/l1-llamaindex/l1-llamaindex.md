@@ -99,7 +99,7 @@ for choice in chat_rsp.choices:
 ```
 
 此时尝试问 baseline 模型谁在 2024 年美国大选中获胜，模型是无法回答的：
-![alt text](images/image-3.png)
+![alt text]("https://github.com/Mictorinox/InternLM-Tutorial/tree/camp4/works/L1/l1-llamaindex/images/image-3.png")
 
 
 ## 2.2 internlm2-chat-1_8b
@@ -122,7 +122,7 @@ print(rsp)
 
 此时尝试问 baseline 模型是无法回答的：
 
-![alt text](images/image.png)
+![alt text]("https://github.com/Mictorinox/InternLM-Tutorial/tree/camp4/works/L1/l1-llamaindex/images/image.png")
 
 # 3. RAG调试
 
@@ -173,7 +173,7 @@ Settings.llm = llm
 ## 3.3 构建知识库
 
 我们引入相关新闻报道作为知识库：
-![alt text](images/image-2.png)
+![alt text]("https://github.com/Mictorinox/InternLM-Tutorial/tree/camp4/works/L1/l1-llamaindex/images/image-2.png")
 从指定目录读取文档：
 
 ```python
@@ -198,8 +198,8 @@ response = query_engine.query("谁在2024年美国总统大选中获胜了？")
 
 之后模型就可以正确回答了, 以下是浦语API + RAG输出结果：
 
-![alt text](images/image-4.png)
+![alt text]("https://github.com/Mictorinox/InternLM-Tutorial/tree/camp4/works/L1/l1-llamaindex/images/image-4.png")
 
 InternLM2-Chat-1.8B + RAG输出结果：
 
-![alt text](images/image-1.png)
+![alt text]("https://github.com/Mictorinox/InternLM-Tutorial/tree/camp4/works/L1/l1-llamaindex/images/image-1.png")
