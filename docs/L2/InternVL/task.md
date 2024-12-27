@@ -6,6 +6,7 @@
 - 了解InternVL2的设计模式，可以大概描述InternVL2的模型架构和训练流程。
 - 了解LMDeploy部署多模态大模型的核心代码，并运行提供的gradio代码，在UI界面体验与InternVL2的对话。
 - 了解XTuner，并利用给定数据集微调InternVL2-2B后，再次启动UI界面，体验模型美食鉴赏能力的变化。
+- 将训练好的模型上传到 Hugging Face 或 ModelScope 上，模型名称包含 InternVL 关键词（优秀学员必做）
 
 ## **闯关材料提交（完成任务并且提交材料视为闯关成功）**
 

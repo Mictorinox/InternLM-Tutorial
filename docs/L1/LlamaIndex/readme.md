@@ -35,6 +35,6 @@ Hello大家好，迎来到实战营第四期的llamaindex+InternLM RAG课程，�
 [传送门](./readme_local.md)
 
 
-## 3. 作业
+## 4. 作业
 
 作业请访问[作业](./task.md)。

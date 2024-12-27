@@ -1,4 +1,4 @@
-# XTuner 微调实践微调 
+# XTuner 微调实践微调 (本文档已废弃)
 
 <img width="900" alt="image" src="https://github.com/user-attachments/assets/e374baf5-283b-4c44-a7db-79caf5e0c3ce">
 
