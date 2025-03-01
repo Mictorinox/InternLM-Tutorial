@@ -50,7 +50,7 @@
 
 ||关卡名称|资料|
 |:-----|:----|:-----|
-|第 1 关| 书生大模型遇见 coze/dify/flowise |[文档]、[视频]|
+|第 1 关| InternLM+WasmEdge 部署智能体实践|[文档]、[视频](https://www.bilibili.com/video/BV1K2rAYeEXG/)|
 
 ## 2. 证书
 

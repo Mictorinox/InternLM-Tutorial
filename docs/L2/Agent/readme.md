@@ -881,3 +881,193 @@ if __name__ == '__main__':
 </div>
 
 **至此，我们完成了本节课所有内容。** 希望大家通过今天的学习，能够更加系统地掌握Agent和Multi-Agents的核心思想和实现方法，并在实际开发中灵活运用。🎉🎉🎉
+
+## 4 Huggingface Spaces 部署
+
+本部分由社区[甘施羽](https://github.com/fresh-little-lemon/)同学贡献🎉🎉
+
+小伙伴们可能在将 agent 的代码部署到 Huggingface Spaces 时遇到了一些困难，比如我不想让别人看到我的 api_key 但我又不知道环境变量怎么设？agent 的 demo 里引用了别的代码的内容，有没有比较方便的办法保留原本的文档结构，直接把天气和博客两个代码一锅端一块儿提交？接下来将手把手教大家解决上面两个痛点。
+
+### 4.1 Spaces本地设置环境变量
+
+首先创建一个新的Spaces，SDK 选择 Streamlit，你会发现在创建的页面中我们并没有关于环境变量或者密钥的选项，不急，先点击 Create Spaces
+![](https://raw.githubusercontent.com/fresh-little-lemon/image/main/InternML-Tutorial/5be353916f253e7f96ac8bbe89a20ac.png)
+
+然后就会跳转到如下页面，点击右上角 Settings
+![](https://raw.githubusercontent.com/fresh-little-lemon/image/main/InternML-Tutorial/Pasted%20image%2020241230222238.png)
+
+然后往下翻，找到 Variables and secrets，找到右上角创建 New secret
+![](https://raw.githubusercontent.com/fresh-little-lemon/image/main/InternML-Tutorial/Pasted%20image%2020241230222401.png)
+这里我们输入两个 api_key，一个是 `token` ——你的浦语/硅基流动 api，一个是 `weather_token` ——你的和风天气 api，要注意名称不要写错。
+![](https://raw.githubusercontent.com/fresh-little-lemon/image/main/InternML-Tutorial/Pasted%20image%2020241230222936.png)
+
+然后点击 Save 就保存好你的密钥了。
+![](https://raw.githubusercontent.com/fresh-little-lemon/image/main/InternML-Tutorial/Pasted%20image%2020241230223159.png)
+
+你可能会问为什么用 Secret 不用 Variable 呢，我们根据 huggingface 的官方文档 [Spaces Overview](https://huggingface.co/docs/hub/spaces-overview#managing-secrets) 的解释
+![](https://raw.githubusercontent.com/fresh-little-lemon/image/main/InternML-Tutorial/Pasted%20image%2020241230225352.png)
+![](https://raw.githubusercontent.com/fresh-little-lemon/image/main/InternML-Tutorial/Pasted%20image%2020241230225421.png)
+![](https://raw.githubusercontent.com/fresh-little-lemon/image/main/InternML-Tutorial/Pasted%20image%2020241230225444.png)
+虽然根据官方文档的描述，Secret 比 Variable 更保险， `Spaces Secrets Scanner` 会对 `os.getenv()` 方法报警，但从下面的小实验中可以看到，在 streamlit 页面中两者其实并无区别（当然官方文档也提到了：For Streamlit Spaces, secrets are exposed to your app through [Streamlit Secrets Management](https://blog.streamlit.io/secrets-in-sharing-apps/), and public variables are directly available as environment variables）
+
+首先我们创建一个 Variable 做对比
+![](https://raw.githubusercontent.com/fresh-little-lemon/image/main/InternML-Tutorial/Pasted%20image%2020241230223340.png)
+然后我们现在就有三个环境变量了
+![](https://raw.githubusercontent.com/fresh-little-lemon/image/main/InternML-Tutorial/Pasted%20image%2020241230223614.png)
+我们用下面这段代码测试，这三个环境变量是否可见，先测试 Variable
+```
+import streamlit as st
+import os
+
+# 获取环境变量
+visible_token = os.getenv('visible_token')
+
+# 创建Streamlit页面
+st.title('环境变量展示')
+
+# 显示环境变量
+st.write('visible_token:', visible_token)
+```
+
+可以看到，就这么水灵灵的就暴露出来了 ![](https://raw.githubusercontent.com/fresh-little-lemon/image/main/InternML-Tutorial/Pasted%20image%2020241230224142.png)
+那么 Secret 呢
+```
+import streamlit as st
+import os
+
+token = os.getenv('token')
+weather_token = os.getenv('weather_token')
+
+st.title('环境变量展示')
+
+st.write('token:', token)
+st.write('weather_token:', weather_token)
+```
+
+很遗憾，仍然是可以暴露的
+![](https://raw.githubusercontent.com/fresh-little-lemon/image/main/InternML-Tutorial/Pasted%20image%2020241230225904.png)
+但可不可以用呢，答案是**放心用，没问题的**，因为只要你不傻傻地自己写代码暴露 api 别人是没办法获取你写在 Huggingface Spaces 环境变量中的 api_token 的，所以放心大胆的使用就好了。当然如果你对这种办法有些膈应，觉得可能有暴露的风险，或者单纯不想让别人用你的 api，我们下面将介绍另一种方法来解决这个问题。
+
+### 4.2 获取用户输入token与多页面导航
+
+首先因为 Huggingface Spaces在初始化时需要提供 python 环境的清单，因此我们修改 `/root/agent_camp4/lagent/requirements.txt` ，在其中添加如下 python 包
+```
+torch==2.1.2
+torchvision==0.16.2
+torchaudio==2.1.2
+termcolor==2.4.0
+streamlit==1.39.0
+class_registry==2.1.2
+datasets==3.1.0
+griffe==0.48.0
+```
+![](https://raw.githubusercontent.com/fresh-little-lemon/image/main/InternML-Tutorial/Pasted%20image%2020241219175535.png)
+
+不过实测发现 huggingfaces 上的 docker 找不到 `requirements/optional.txt` 和 `requirements/runtime.txt`
+![](https://raw.githubusercontent.com/fresh-little-lemon/image/main/InternML-Tutorial/Pasted%20image%2020241223085959.png)
+
+我们将其手动添加至 `requirements.txt` 中，拷贝下面这段代码：
+```
+torch==2.1.2
+torchvision==0.16.2
+torchaudio==2.1.2
+termcolor==2.4.0
+streamlit==1.39.0
+class_registry==2.1.2
+datasets==3.1.0
+# -r requirements/optional.txt
+google-search-results
+lmdeploy>=0.2.5
+pillow
+python-pptx
+timeout_decorator
+torch
+transformers>=4.34,<=4.40
+vllm>=0.3.3
+# -r requirements/runtime.txt
+aiohttp
+arxiv
+asyncache
+asyncer
+distro
+duckduckgo_search==5.3.1b1
+filelock
+func_timeout
+griffe<1.0
+json5
+jsonschema
+jupyter==1.0.0
+jupyter_client==8.6.2
+jupyter_core==5.7.2
+pydantic==2.6.4
+requests
+termcolor
+tiktoken
+timeout-decorator
+typing-extensions
+griffe==0.48.0
+```
+![](https://raw.githubusercontent.com/fresh-little-lemon/image/main/InternML-Tutorial/Pasted%20image%2020241223091226.png)
+
+
+由于 Huggingface Spaces 要求 file 中必须有一个名称为 `app.py` 的文件，否则会出现 `No application file` 错误。
+![](https://raw.githubusercontent.com/fresh-little-lemon/image/main/InternML-Tutorial/Pasted%20image%2020241223085618.png)
+
+我们当然可以把 `agent_api_web_demo.py` 和 `multi_agents_api_web_demo.py` 更名为 `app.py`，然而考虑到这两个页面文件会调用到其他代码，我们又不希望把时间浪费在找依赖上，于是我们直接在 `agent_camp4/lagent` 文件夹下做一个 `app.py` 的入口文件当作 HomePage，编写一个多页面的 streamlit 首页实现对天气查询小助手和博客写作小助手两个 agent 的导航，代码如下（我们这里采用代码写入环境变量的方式，这样子别人来访问的时候可以不用消耗你自己的 api_token，而是让他们自己填写）
+```python
+import streamlit as st
+import os
+import runpy
+st.set_page_config(layout="wide", page_title="My Multi-Page App")
+def set_env_variable(key, value):
+    os.environ[key] = value
+def home_page():
+    st.header("欢迎来到首页")
+    # 设置输入框为隐私状态
+    token = st.text_input("请输入浦语token:", type="password", key="token")
+    weather_token = st.text_input("请输入和风天气token:", type="password", key="weather_token")
+    if st.button("保存并体验agent"):
+        if token and weather_token:
+            set_env_variable("token", token)  # 设置环境变量为 'token'
+            set_env_variable("weather_token", weather_token)  # 设置环境变量为 'weather_token'
+            st.session_state.token_entered = True
+            st.rerun()
+        else:
+            st.error("请输入所有token")
+if 'token_entered' not in st.session_state:
+    st.session_state.token_entered = False
+if not st.session_state.token_entered:
+    home_page()
+else:
+    # 动态加载子页面
+    page = st.sidebar.radio("选择页面", ["天气查询助手", "博客写作助手"])
+    if page == "天气查询助手":
+        runpy.run_path("examples/agent_api_web_demo.py", run_name="__main__")
+    elif page == "博客写作助手":
+        runpy.run_path("examples/multi_agents_api_web_demo.py", run_name="__main__")
+```
+
+此外由于 streamlit 要求一个页面内**只能有一个** `st.set_page_config()` 函数，因此需要把 `agent_api_web_demo.py` 和 `multi_agents_api_web_demo.py` 中的相应代码注释掉，不然会报错
+
+`agent_api_web_demo.py` 第 49\~53 行和第 136\~140 行
+![](https://raw.githubusercontent.com/fresh-little-lemon/image/main/InternML-Tutorial/Pasted%20image%2020241223090619.png)
+![](https://raw.githubusercontent.com/fresh-little-lemon/image/main/InternML-Tutorial/Pasted%20image%2020241223090707.png)
+ `multi_agents_api_web_demo.py` 第 153 行
+![](https://raw.githubusercontent.com/fresh-little-lemon/image/main/InternML-Tutorial/Pasted%20image%2020241223090819.png)
+
+然后我们就可以将 `agent_camp4/lagent` 文件夹下需要的文件用 `rsync` 全都拷贝到自己新建的 huggingface Spaces 仓库下了（注意！由于 git 文件和 `README` 中有仓库的配置信息，一定要警惕不能被覆盖掉，保持原来的就行，然后别忘了把 `{your_huggingface_name}` 替换成自己的 huggingface 用户名）
+```
+git clone https://hf-mirror.com/spaces/{your_huggingface_name}/Lagent
+cd Lagent/
+rsync -av -o -t --exclude='.git*' --exclude='README.md' /root/agent_camp4/lagent/ /root/Lagent/
+git add .
+git commit -m "Add files"
+git push
+```
+
+这样我们就在 huggingface 上部署成功了~~
+![](https://raw.githubusercontent.com/fresh-little-lemon/image/main/InternML-Tutorial/Pasted%20image%2020241223092958.png)
+![](https://raw.githubusercontent.com/fresh-little-lemon/image/main/InternML-Tutorial/Pasted%20image%2020241223092847.png)
+![](https://raw.githubusercontent.com/fresh-little-lemon/image/main/InternML-Tutorial/Pasted%20image%2020241223092907.png)
+![](https://raw.githubusercontent.com/fresh-little-lemon/image/main/InternML-Tutorial/Pasted%20image%2020241223092818.png)
+
