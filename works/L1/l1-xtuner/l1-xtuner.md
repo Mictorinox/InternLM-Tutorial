@@ -70,7 +70,7 @@ xtuner train ./config/internlm2_5_chat_7b_qlora_alpaca_e3_copy.py --deepspeed de
 
 微调完成输出如下：
 
-![alt text]("https://github.com/Mictorinox/InternLM-Tutorial/tree/camp4/works/L1/l1-llamaindex/images/image.png")
+![alt text](images/image.png)
 
 ## 1.4 权重转换
 
@@ -86,11 +86,11 @@ xtuner convert pth_to_hf ./internlm2_5_chat_7b_qlora_alpaca_e3_copy.py ${pth_fil
 
 权重转换完成后输出：
 
-![alt text]("https://github.com/Mictorinox/InternLM-Tutorial/tree/camp4/works/L1/l1-llamaindex/images/image-1.png")
+![alt text](images/image-1.png)
 
 输出成功后，可以在./finetune 文件夹下找到 hf 格式的模型权重
 
-![alt text]("https://github.com/Mictorinox/InternLM-Tutorial/tree/camp4/works/L1/l1-llamaindex/images/image-2.png")
+![alt text](images/image-2.png)
 
 ## 1.5 模型合并
 
@@ -105,11 +105,11 @@ xtuner convert merge /root/Arthur-L1/finetune/models/internlm2_5-7b-chat ./hf ./
 
 模型合并输出：
 
-![alt text]("https://github.com/Mictorinox/InternLM-Tutorial/tree/camp4/works/L1/l1-llamaindex/images/image-3.png")
+![alt text](images/image-3.png)
 
 合并后可以在./merged 文件夹下找到
 
-![alt text]("https://github.com/Mictorinox/InternLM-Tutorial/tree/camp4/works/L1/l1-llamaindex/images/image-4.png")
+![alt text](images/image-4.png)
 
 streamlit run /root/Tutorial/tools/L1_XTuner_code/xtuner_streamlit_demo.py
 
@@ -119,4 +119,4 @@ streamlit run /root/Tutorial/tools/L1_XTuner_code/xtuner_streamlit_demo.py
 
 WebUI 对话效果：
 
-![alt text]("https://github.com/Mictorinox/InternLM-Tutorial/tree/camp4/works/L1/l1-llamaindex/images/image-5.png")
+![alt text](images/image-5.png)
