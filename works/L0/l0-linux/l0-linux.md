@@ -1,4 +1,4 @@
-本文为笔者参与书生大模型实战营第四期的关卡任务实现记录。在此仅作流程演示和简要说明。如果想了解更多关于原理和不同实现方式的细节，强烈推荐参考主办方提供的[说明文档](https://github.com/InternLM/Tutorial/blob/camp4/docs/L0/linux/readme.md)。
+本文为笔者参与书生大模型实战营第四期的关卡任务实现记录。如果有同学想亲自上手实践，推荐参考主办方提供的[说明文档](https://github.com/InternLM/Tutorial/blob/camp4/docs/L0/linux/readme.md)。
 
 # L0 Linux+InternStudio 篇
 

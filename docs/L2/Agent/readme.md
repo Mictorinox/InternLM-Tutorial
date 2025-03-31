@@ -1,3 +1,5 @@
+本文为笔者参与书生大模型实战营第四期的关卡任务实现记录。如果有同学想亲自上手实践，推荐参考主办方提供的[说明文档](https://github.com/InternLM/Tutorial/blob/camp4/docs/L1/Evaluation/README.md)。
+
 # Lagent：从零搭建你的 Multi-Agent 
 
 ## 1 Agent基本介绍

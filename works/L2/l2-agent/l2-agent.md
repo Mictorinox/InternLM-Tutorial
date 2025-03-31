@@ -1,8 +1,8 @@
-本文为笔者参与书生大模型实战营第四期的关卡任务实现记录。在此仅作流程演示和简要说明。如果想了解更多关于原理和不同实现方式的细节，强烈推荐参考主办方提供的[说明文档](https://github.com/InternLM/Tutorial/blob/camp4/docs/L1/Evaluation/README.md)。
+本文为笔者参与书生大模型实战营第四期的关卡任务实现记录。如果有同学想亲自上手实践，推荐参考主办方提供的[说明文档](https://github.com/InternLM/Tutorial/blob/camp4/docs/L1/Evaluation/README.md)。
 
 Lagent：从零搭建你的 Multi-Agent
 
-任务如下：
+# 任务
 
 - 使用 Lagent 复现文档中 “制作一个属于自己的 Agent” 和 “Multi-Agents 博客写作系统的搭建”两部分内容，记录复现过程并截图。
 - 将你的 Agent 部署到 Hugging Face 或 ModelScope 平台，应用名包含 Lagent 关键词
